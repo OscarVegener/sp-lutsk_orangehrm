@@ -6,8 +6,8 @@ services:
     image: orangehrm/orangehrm:latest
     restart: always
     ports:
-      - "8200:80"
-      - "8443:443"
+      - "80:80"
+      - "443:443"
     volumes:
       - ./orange:/orangehrm
     depends_on:
