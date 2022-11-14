@@ -1,15 +1,25 @@
 version: "3.3"
 
 services:
-      
-  orangehrm:
-    image: orangehrm/orangehrm:latest
-    restart: always
-    ports:
+  nginx:
+    container_name: nginx
+    image: nginx:latest
+    ports: 
       - "80:80"
       - "443:443"
+    environment:
+      - NGINX_HOST=orange.sp-lutsk.com
     volumes:
-      - ./orange:/orangehrm
+      - ./nginx/ssl:/etc/nginx/certs
+      - ./nginx/config/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/sites-enabled:/etc/nginx/sites-enabled
+    depends_on:
+      - orangehrm
+
+  orangehrm:
+    container_name: orangehrm
+    image: orangehrm/orangehrm:latest
+    restart: always
     depends_on:
       - mysql  
 
